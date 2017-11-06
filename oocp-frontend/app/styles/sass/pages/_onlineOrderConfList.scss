@@ -1,0 +1,212 @@
+body {
+	background-color: $site-background;
+}
+
+.orders-confirmation-settings {
+	display:block;
+	height: 40px;
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;	
+	padding-bottom: 20px;
+	padding-top: 10px;
+	label {
+	    float:left;
+	    padding: 5px 10px 5px 20px;
+	}
+	.toggle {
+	    float:left;
+	    padding-right: 20px;
+	}
+	.soundbyte {
+	    float:right;
+	}
+	.confirm-online {
+		float:left;
+		font-weight:bold;
+		padding: $gutter-width;
+		width: 245px;
+		border: 1px solid $disabled-color;
+	}
+	.email-alerts {
+		float:left;
+		font-weight: bold;
+		padding: $gutter-width;
+		width: 245px;
+		border-right: 1px solid $disabled-color;
+		border-top: 1px solid $disabled-color;
+		border-bottom: 1px solid $disabled-color;
+	}
+	.session-status-message {
+		float:right;
+		font-size: 13px;
+		width: 345px;
+		border: 1px solid $disabled-color;
+		padding: 5px;
+	}
+}
+
+#orders-container {
+	margin-top: 20px;
+	.tabs-container {	
+	    font-weight: bold;
+	    display: block;
+		width: 960px;
+		margin-left: auto;
+		margin-right: auto;    
+	    .active {
+	    	@include box-sizing(border-box);
+	        float:left;
+	        height:40px;			        
+	        width:175px;
+	        border: 0px;
+	        background-color: #FFF;
+	    	border-top: 3px solid $primary-color;
+	    	padding: $gutter-width;
+	        text-align:center;
+	        a {
+	        	color:$primary-text-color;
+	        }
+	    }
+	    .tab {
+	    	@include box-sizing(border-box);
+	        float:left;
+	        height:40px;
+	        width:175px;
+	        background-color: rgba(#000000, .4);  
+	        border: 1px solid $border-color;
+	    	padding: $gutter-width;
+	        text-align:center;
+	        a {
+	        	color: $disabled-color;  
+	        }
+	    }
+	    .order-count-wrapper {
+	    	display:inline-block;
+	    	float: right;
+	    	margin-top: auto;
+	    	margin-bottom: auto;
+	    	.order-count-bubble {
+	    		display: inline-block;
+				height: 23px; 
+				line-height: 23px;
+				width: 23px;
+	    		color: #FFF;
+	    		font-size: 13px;
+	    		font-weight: bold;
+	    		vertical-align: middle;
+	    		background-color: #b71d30;
+				border-radius: 50%;
+			}
+		}
+	}
+	.orders-wrapper {
+		display:block;
+		width: 960px;
+		min-height: 100%;
+		overflow: visible;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 20px;
+		background-color: #FFFFFF;
+		.orders-section {
+			display:block;
+			padding: 20px;
+			.orders-section-header {
+				border-bottom: 3px solid $primary-color;
+				color: black;
+				font-size: $subsection-header-font-size;
+				font-weight: bold;
+				line-height: $subsection-header-line-height;
+				.order-type {
+					text-align: left;
+				}
+				.view-all {
+					font-size: $subsection-header-font-size;
+					line-height: $subsection-header-line-height;
+					color: $primary-color-lighter;
+					float: right;
+				}
+			}
+			.order-row {
+				display:block;
+				height: 40px;
+				border-bottom: 1px solid $border-color;
+				padding:20px;
+				.order-details {
+					display:block;
+					float:left;
+					width: 325px;
+					.id-and-total {
+						font-size: $subsection-header-font-size;
+						line-height: $subsection-header-line-height;
+						color: $primary-color;
+						.id {
+							text-align:left;
+							width: auto;
+						}
+						.total {
+							text-align: right;
+							width: auto;
+						}
+					}
+					.time-and-countdown {
+						width: auto;
+						.time {
+							float:left;
+						}
+						.countdown {
+							margin-left: $gutter-width;
+							color: $alert-color;
+						}
+					}
+				}
+				.confirm-order {
+					display:none;
+					float:left;
+					width: 265px;
+					text-align: center;
+					a {
+						height: 40px;
+						width: 240px;
+						background-color: #FFF;
+						padding: $gutter-width;
+						color: $alert-color;
+						border: 1px solid $alert-color;
+						font-size: $primary-font-size;
+						text-align: center;
+					}
+				}
+				.order-status {
+					display:block;
+					float:left;
+					width: 300px;
+					text-align: center;
+					span {
+						font-size: $primary-font-size;
+						font-weight: bold;
+					}
+				}
+				.delivery-details {
+					display:block;
+					float:right;
+				    width: auto;
+				    .info {
+				    	text-align: right;
+				    	.status {
+				    		font-size: $subsection-header-font-size;
+				    		line-height: $subsection-header-line-height;    	
+							color: $primary-color;
+				    	}
+				    	.address {
+				    		text-transform: capitalize;
+				    	}
+				    }
+				    .go-to-order {
+				    
+				    }
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,122 @@
+/* Functions
+******************************************************************************/
+@function columns-width($num-columns, $column-width, $gutter-width) {
+	@return ($column-width * $num-columns) + (($gutter-width * 2) * ($num-columns - 1));
+}
+
+/* Fonts
+******************************************************************************/
+$main-font-family: Helvetica,Arial,sans-serif;
+$primary-font-size: 15px;
+$primary-line-height: 18px;
+$secondary-font-size: 13px;
+$secondary-line-height: 15px;
+$legal-font-size: 11px;
+$legal-line-height: 13px;
+$page-header-font-size: 36px;
+$page-header-line-height: 44px;
+$module-header-font-size: 24px;
+$module-header-line-height: 28px;
+$subsection-header-font-size: 18px;
+$subsection-header-line-height: 24px;
+$button-font-size: 18px;
+$button-line-height: 22px;
+$list-item-font-size: 15px;
+$list-item-line-height: 18px;
+
+/* Colors
+******************************************************************************/
+/* Palette */
+$primary-color: #3b598a;
+$primary-color-lighter: #6886aa;
+$primary-color-darker: #1f3a60;
+$action-color: #e86a15;
+$secondary-action-color: $primary-color-lighter;
+$disabled-color: #c2c2c2;
+$neutral-color: #dadada;
+$border-color: #cccccc;
+$alert-color: #b71d30;
+
+
+/* Text */
+$primary-text-color: #333333;
+$secondary-text-color: #666666;
+$legal-text-color: #999999;
+$link-color: $primary-color-lighter;
+$page-header-text-color: $primary-text-color;
+$module-header-text-color: $primary-color;
+$subsection-header-text-color: $primary-text-color;
+
+/* Contrasting text colors */
+$primary-text-color-contrast: #ffffff;
+$secondary-text-color-contrast: #ffffff;
+$link-color-contrast: #ffffff;
+
+/* Backgrounds */
+$site-background: #EEEEEE;
+$header-background: $primary-color;
+
+/* lists */
+$list-item-border-color: #d9d9d9;
+
+/* menu */
+$menu-item-price-color: #999999;
+
+/* Sizes
+******************************************************************************/
+$logo-height: 54px;
+$button-height: 40px;
+$button-padding-horizontal: 25px;
+
+/* Layout
+******************************************************************************/
+/* six column layout */
+$gutter-width: 10px;
+$column-width-desktop: 163px; // for screens 1280px and higher
+$column-width-small: 140px; // for 1024px screens
+$column-width-small-portrait: 108px; // for 768px screens (tablet portrait)
+
+$site-width-mobile: 320px;
+$site-width-mobile-large: 568px;
+
+$header-height: 90px;
+$main-aside-width: $site-width-mobile - 40px;
+
+$list-item-height: 50px;
+$list-item-horizontal-border-width: 1px;
+$list-item-vertical-border-width: 1px;
+$list-item-vertical-padding: (($list-item-height - $list-item-line-height - $list-item-horizontal-border-width) / 2);
+// padding applied to .main-content to allow space for fixed position cta
+// button plus cta bar padding plus more padding between bar and content
+$fixed-cta-padding: $button-height + (3 * $gutter-width);
+
+/* Mixins
+******************************************************************************/
+@mixin primary-text {
+	color: $primary-text-color;
+	font-size: $primary-font-size;
+	line-height: $primary-line-height
+}
+@mixin secondary-text {
+	color: $secondary-text-color;
+	font-size: $secondary-font-size;
+	line-height: $secondary-line-height
+}
+@mixin legal-text {
+	color: $legal-text-color;
+	font-size: $legal-font-size;
+	line-height: $legal-line-height;
+}
+
+/* Placeholders
+******************************************************************************/
+/* list item */
+%list-item {
+	display: block;
+	padding: $list-item-vertical-padding $gutter-width;
+	border-bottom: $list-item-vertical-border-width solid $list-item-border-color;
+	border-left: $list-item-horizontal-border-width solid $list-item-border-color;
+	border-right: $list-item-horizontal-border-width solid $list-item-border-color;
+	font-size: $list-item-font-size;
+	line-height: $list-item-line-height;
+}

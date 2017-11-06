@@ -1,0 +1,451 @@
+html,
+button,
+input,
+select,
+textarea {
+	@include primary-text;
+
+	font-family: $main-font-family;
+}
+h1 {
+	color: $page-header-text-color;
+	font-size: $page-header-font-size;
+	font-weight: normal;
+	line-height: $page-header-line-height;
+}
+h2 {
+	color: $module-header-text-color;
+	font-size: $module-header-font-size;
+	font-weight: normal;
+	line-height: $module-header-line-height;
+}
+h3 {
+	color: $subsection-header-text-color;
+	font-size: $subsection-header-font-size;
+	line-height: $subsection-header-line-height;
+}
+h4 {
+	margin-bottom: 0;
+}
+a {
+	color: $link-color;
+	cursor: pointer; //for links without href
+	text-decoration:none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+input,
+textarea {
+	border: 1px solid $border-color;
+	
+	&:focus {
+		outline-color: $secondary-action-color;
+	}
+}
+//no support for a mixin until compass 0.13
+//https://github.com/chriseppstein/compass/issues/418
+input::-webkit-input-placeholder {
+	color: $secondary-text-color;
+}
+input::-moz-placeholder {
+	color: $secondary-text-color;
+}
+input:-moz-placeholder {   /* Older versions of Firefox */
+	color: $secondary-text-color;
+}
+input:-ms-input-placeholder {
+	color: $secondary-text-color;
+}
+
+// Apple quit messing with my form fields. OSX screws up search iOS messes with everything.
+input[type="search"],
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="submit"],
+input[type="tel"],
+button,
+textarea,
+select {
+	/*-webkit-appearance: none;*/
+	border-radius: 0;
+}
+
+// Put back search cancel button removed by normalize.css
+input[type="search"]::-webkit-search-cancel-button {
+	-webkit-appearance: searchfield-cancel-button;
+	border-radius: 0;
+}
+
+// Get rid of native spinner controls
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+	/*-webkit-appearance: none; */
+	margin: 0; 
+}
+
+.chromeframe-wrapper {
+	background-color: $alert-color;
+}
+.chromeframe {
+	max-width: $site-width-mobile;
+	padding: 10px;
+	margin: 0 auto;
+}
+
+/* Layout
+*******************************************************************************/
+html,
+body {
+	height: 100%;
+}
+.site-wrapper {
+	position: relative;
+	min-height: 100%;
+	margin: 0 auto;
+}
+.main-content-wrapper {
+	position: relative;
+}
+.main-content {
+	@include pie-clearfix;
+}
+.main-aside {
+	position:absolute;
+	display: none;
+	width: $main-aside-width;
+	height: 100%;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	background-color: #333333;
+	color: $primary-text-color-contrast;
+
+	a {
+		color: $primary-text-color-contrast;
+	}
+}
+.site-wrapper.mainNavActive {
+	height: 100%;
+
+	.main-aside {
+		display: block;
+	}
+	.main-content-wrapper {
+		left: $main-aside-width;
+	}
+}
+.loading {
+	height: 85px;
+	margin: 50px auto;
+	background: inline-image('loading.gif') center center no-repeat;
+}
+
+body.page-loading:before {
+	content: '';
+	position: fixed;
+	height: 5px;
+	width: 100%;
+	background: inline-image('page-loading.gif');
+	top: 0;
+	left: 0;
+	display: block;
+	z-index: 1;
+}
+
+/* Address search
+*******************************************************************************/
+.address-search {
+	position: relative;
+	padding-right: 40px;
+
+	input[type=search] {
+		@include box-sizing(border-box);
+		width: 100%;
+		height: 40px;
+	}
+	.address-search-submit.button.primary {
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 40px;
+		height: 40px;
+		overflow: hidden;
+		background: $action-color;
+		background-size:26px 25px;
+		border-radius: 0;
+		box-shadow: none;
+		padding: 0;
+		span {
+			font-size: 26px;
+			color: #FFF;
+			line-height: 40px;
+		}
+		.button {
+			padding: 0;
+		}
+
+		&.button:active {
+			position: absolute;
+			top: 0;
+			background-color: scale-color($action-color, $lightness: -28%);
+		}
+	}
+}
+
+/* Item Option display
+*******************************************************************************/
+.item-option-display {
+	.active-item-header {
+		position: relative;
+		padding: $gutter-width $gutter-width 0 $gutter-width;
+
+		.name {
+			margin: 0 70px 0 0;
+			color: $primary-color;
+			font-size: $primary-font-size;
+			font-weight: normal;
+			line-height: $primary-line-height;
+		}
+		.description {
+			margin-top: 5px;
+			font-size: 12px;
+			line-height: 15px;
+		}
+		.price {
+			position: absolute;
+			top: $gutter-width;
+			right: $gutter-width;
+			color: #999999;
+		}
+	}
+	.item-options {
+		padding: 0 $gutter-width;
+		border-top: 1px solid $border-color;
+		margin-top: $gutter-width;
+	}
+	.option-group-header {
+		@extend %list-item;
+
+		border-top: 2px solid $primary-color;
+		margin-top: 10px;
+
+		h3 {
+			margin: 0;
+			font-size: $list-item-font-size;
+			line-height: $list-item-line-height;
+		}
+		.instructions {
+			@include secondary-text;
+		}
+		.description {
+			@include secondary-text;
+		}
+	}
+	.option > label {
+		@include pie-clearfix;
+		@extend %list-item;
+		@include transition(background-color .5s);
+
+		background-color: #f8f8f8;
+
+		input {
+			display: none;
+		}
+		.name {
+			float: left;
+			width: 200px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.price {
+			float: right;
+			color: $menu-item-price-color;
+		}
+		.description {
+			@include secondary-text;
+
+			clear: both;
+		}
+
+		.option-quantity {
+			float: left;
+
+			input {
+				display: inline;
+				width: 30px;
+				font-weight: bold;
+				text-align: center;
+			}	
+		} 
+	}
+	.option.active > label {
+		@include transition(background-color 0.2s);
+
+		background-color: $primary-color-lighter;
+		color: $primary-text-color-contrast;
+
+		.price,
+		.description {
+			color: $primary-text-color-contrast;
+		}
+	}
+	.option.inactive > label {
+		color: #cccccc;
+
+		.price,
+		.description {
+			color: #cccccc;
+		}
+	}
+
+	//nested option group
+	.option {
+		.option-group-header {
+			padding-top: 5px;
+			padding-bottom: 5px;
+			border-top: none;
+			margin-top: 0;
+			background-color: #f8f8f8;
+
+			h3 {
+				font-size: 12px;
+				font-weight: normal;
+				line-height: 15px;
+			}
+		}
+		.option > label {
+			padding-left: $gutter-width * 2;
+		}
+	}
+
+	.special-instructions {
+		padding: $gutter-width;
+		border-top: 1px solid $border-color;
+		margin-top: $gutter-width;
+
+		label {
+			display: block;
+			font-weight: bold;
+		}
+		textarea {
+			@include box-sizing(border-box);
+			
+			width: 100%;
+			height: $primary-line-height * 3;
+		}
+	}
+	.item-quantity {
+		@include pie-clearfix;
+
+		padding: $gutter-width;
+		border-top: 1px solid $border-color;
+		line-height: 40px;
+
+		label {
+			float: left;
+			font-weight: bold;
+		}
+		.qty-spinner {
+			float: right;
+
+			input {
+				@include box-sizing(border-box);
+
+				width: 40px;
+				height: 40px;
+				margin: 0 $gutter-width;
+				font-weight: bold;
+				text-align: center;
+				vertical-align: top;
+			}
+		}
+	}
+	a.spinner-control {
+		color: #999999;
+		font-size: 40px;
+	}
+	a.spinner-control:hover {
+		text-decoration: none;
+	}
+	.action {
+		.button {
+			padding-right: 85px;
+			text-align: left;
+			
+			.item-total {
+				position: absolute;
+				top: 3px;
+				right: $gutter-width;
+
+				.label {
+					display: block;
+					font-size: 12px;
+					line-height: 12px;
+				}
+			}
+		}
+	}
+}
+
+/* CTA
+*******************************************************************************/
+.fixed-cta {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	min-width: $site-width-mobile;
+	max-width: $site-width-mobile-large;
+	background: rgba(#333333, .9);
+
+	.site-wrapper.mainNavActive & {
+		margin-left: $main-aside-width;
+	}
+	.button {
+		display: block;
+		padding-left: $gutter-width;
+		padding-right: $gutter-width;
+		margin: $gutter-width;
+	}
+}
+
+/* Modals
+*******************************************************************************/
+@media (max-height: 500px) {
+	.modal-body {
+		max-height: 330px
+	}
+}
+
+.rating-stars {
+	font-family: 'dcom_ico_font';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	visibility: hidden;
+	width: 0;
+	overflow: hidden;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	@extend .icon-star;
+
+	color: #FBC900;
+	position: relative;
+	margin-right: -8px;
+	font-size: 12px;
+}
+
+.rating-stars:before {
+	visibility: visible;
+	display: inline-block;
+	width: 15px;
+}

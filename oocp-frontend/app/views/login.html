@@ -1,0 +1,33 @@
+<div id="login">
+	<div class="content">
+		<div ng-repeat="message in login.messages" class="error-messages">
+			{{message.user_msg}}
+		</div>
+		<form ng-submit="submitLogin()">
+			<div class="form-field email">
+				<div>
+					<input ng-model="login.userName" type="email" placeholder="Email" id="email" />
+				</div>
+			</div>
+			<div class="form-field password">
+				<div>
+					<input ng-model="login.password" type="password" placeholder="Password" id="password" />
+				</div>
+			</div>
+			<div class="sign-in">
+				<a ng-click="submitLogin()" dcom-processing="{{loginProcessing}}" class="button primary login">Log in</a>
+			</div>
+		</form>
+		<!--
+		<div class="forgot_password">
+			<a ng-click="resetPasswordModal(login.userName)">Doh! I forgot my password.</a>
+		</div>
+		<div class="signup">
+			<h2>Don't have an account?</h2>
+			<div class="cta">
+				<a ng-click="goToRegistration()" class="button secondary">Sign up</a>
+			</div>
+		</div>
+		-->
+	</div>
+</div>

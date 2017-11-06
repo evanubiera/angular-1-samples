@@ -1,0 +1,119 @@
+<div class="banner-wrapper">
+    <div class="banner">
+    	<div class="text">
+    		<div ng-show="currentMerchant.merchant">
+    			<div class="title">{{currentMerchant.merchant.summary.name}}</div>
+    			<div class="content">{{currentMerchant.merchant.location.street}}, {{currentMerchant.merchant.location.city}}, {{currentMerchant.merchant.location.state}}</div>
+    		</div>
+    		<div class="merchant-list" ng-show="merchantList">
+    			<div class="">Select a merchant</div>
+    			<select id="merchant-list" ng-model="selectedMerchant" ng-options="merchant.id as merchant.displayName for merchant in merchantList">
+    			</select>
+    		</div>
+    	</div>
+    </div>
+</div>
+<audio id="alert-audio" src="/api/merchant/admin/alert/3?key=MDlkMzY3Nzg3MjU1ZjRkNmY4OWZjNDA0NjBjMTI0MWZl">
+</audio>
+<!-- <div class="loading" ng-show="processingAdminSettings"></div> -->
+	<!-- tabs -->
+<div id="orders-container">	
+	<div class="tabs-container">
+	    <div class="active" dcom-order-list="dcomOrderList" data-order-type=""><a>All</a><div class="order-count-wrapper" ng-show="archivedOrders.length > 0"><div class="order-count-bubble">{{asapOrders.length + scheduledOrders.length}}</div></div></div>
+	    <div class="tab" dcom-order-list="dcomOrderList" data-order-type="asap"><a>ASAP orders</a><div class="order-count-wrapper" ng-show="asapOrders.length > 0"><div class="order-count-bubble">{{asapOrders.length}}</div></div></div>
+	    <div class="tab" dcom-order-list="dcomOrderList" data-order-type="scheduled"><a>Scheduled</a><div class="order-count-wrapper" ng-show="scheduledOrders.length > 0"><div class="order-count-bubble">{{scheduledOrders.length}}</div></div></div>
+	    <div class="tab" dcom-order-list="dcomOrderList" data-order-type="archive"><a>Order archive</a><!--<div class="order-count-wrapper" ng-show="archivedOrders.length > 0"><div class="order-count-bubble">{{archivedOrders.length}}</div></div>--></div>
+	</div>
+	<div style="clear:both"></div>
+	<div class="loading" ng-show="processingOrders"></div>
+	<section class="orders-wrapper" ng-hide="processingOrders">
+		<div class="orders-section" ng-hide="orderTypeExists">
+			There are no orders at the moment.
+		</div>
+		<div class="orders-section" ng-show="asapOrders.length > 0 && (currentOrderType=='' || currentOrderType=='asap')">
+			<div class="orders-section-header">
+				<span class="order-type">ASAP orders</span>
+			</div>
+			<div class="order-row" ng-repeat="order in asapOrders" ng-click="viewOrder(order.order_id)">
+			    <div class="order-details">
+			        <div class="id-and-total">
+			        	<span class="id">Order #{{order.order_id}}</span> | <span class="total">{{order.total | currency}}</span>
+			        </div>
+			        <div class="time-and-countdown">
+			        	<span class="time">placed on {{order.order_date | date:'M/d'}} at {{order.order_date | date: 'h:mma'}}</span>	
+			        	<span class="countdown">
+			        		<timer data-order-id="order.order_id" start-time="order.order_date"><span ng-show="(hours > 0)">{{hours}} hour(s), </span>{{minutes}} minute(s)</timer>
+			        	</span>
+			        </div>
+			    </div>
+			    <div class="confirm-order" id="{{order.order_id}}">
+			    	<a href="/#!/ooc/{{order.order_id}}">PLEASE CONFIRM ORDER</a>
+			    </div>
+			    <div class="delivery-details">
+			    	<div class="info">
+			        	<div class="status" ng-show="(order.asap==true)"> To be delivered ASAP</div>
+			        	<div class="address">to {{order.street}}</div>
+			        </div>
+			        <div class="go-to-order">
+			        <!-- right arrow goes here -->
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<div class="orders-section" ng-show="scheduledOrders.length > 0 && (currentOrderType=='' || currentOrderType=='scheduled')">
+			<div class="orders-section-header">Scheduled orders</div>
+			<div class="order-row" ng-repeat="order in scheduledOrders" ng-click="viewOrder(order.order_id)">
+			    <div class="order-details">
+			        <div class="id-and-total">
+			        	<span class="id">Order #{{order.order_id}}</span> | <span class="total">{{order.total | currency}}</span>
+			        </div>
+			        <div class="time-and-countdown">
+			        	<span class="time">placed on {{order.order_date | date:'M/d'}} at {{order.order_date | date: 'h:mma'}}</span>	
+			        	<span class="countdown">
+			        		<timer data-order-id="order.order_id" start-time="order.order_date"><span ng-show="(hours > 0)">{{hours}} hour(s), </span>{{minutes}} minute(s)</timer>
+			        	</span>
+			        </div>
+			    </div>
+			    <div class="confirm-order" id="{{order.order_id}}">
+			    	<a href="/#!/ooc/{{order.order_id}}">PLEASE CONFIRM ORDER</a>
+			    </div>
+			    <div class="delivery-details">
+			    	<div class="info">
+			        	<div class="status" ng-show="(order.type=='pickup')">To be delivered on {{order.schedule_date | date:'M/d'}} at {{order.schedule_date | date: 'h:mma'}}</div>
+			        	<div class="address">to {{order.street}}</div>
+			        </div>
+			        <div class="go-to-order">
+			        <!-- right arrow goes here -->
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<div class="orders-section" ng-show="archivedOrders.length > 0 && (currentOrderType=='' || currentOrderType=='archive')">
+			<div class="orders-section-header" >Order archive</div>
+			<div class="order-row" ng-repeat="order in archivedOrders" ng-click="viewOrder(order.order_id)">
+			    <div class="order-details">
+			        <div class="id-and-total">
+			        	<span class="id">Order #{{order.order_id}}</span> | <span class="total">{{order.total | currency}}</span>
+			        </div>
+			        <div class="time-and-countdown">
+			        	<span class="time">placed on {{order.order_date | date:'M/d'}} at {{order.order_date | date: 'h:mma'}}</span>	
+			        </div>
+			    </div>
+			    <div class="order-status">
+			    	<div ng-show="(currentMerchant==null)"><strong>{{order.merchant_name}}</strong></div>
+			    	<div ng-show="(order.confirmed==true)"><span>Confirmed on:</span> {{order.confirmed_date | date:'M/d'}} at {{order.confirmed_date | date: 'h:mma'}}</div>
+			    	<div ng-show="(order.confirmed==false)"><span>Cancelled on:</span> {{order.confirmed_date | date:'M/d'}} at {{order.confirmed_date | date: 'h:mma'}}</div>
+			    </div>
+			    <div class="delivery-details">
+			    	<div class="info">
+			        	<div class="status">Delivered on {{order.schedule_date | date:'M/d'}} at {{order.schedule_date | date: 'h:mma'}}</div>
+			        	<div class="address">to {{order.street}}</div>
+			        </div>
+			        <div class="go-to-order">
+			        <!-- right arrow goes here -->
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</section>
+</div>

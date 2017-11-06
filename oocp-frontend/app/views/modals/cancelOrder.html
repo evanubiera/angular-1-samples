@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('close')" aria-hidden="true">&times;</button>
+    <h3>Cancelled order: {{orderId}}</h3>
+</div>
+<div class="cancel-confirm-msg" ng-show="isCancelled">
+	{{userCancellationMsg}}
+</div>
+<div class="order-cancellation" ng-hide="isCancelled">
+	<div class="error-msg" ng-show="errorMsg">{{errorMsg}}</div>
+	<label>Cancellation reason (pick a reason from the dropdown) *:</label>
+	<div class="reasons">	
+	    <select ng-model="cancellation.reason">
+	    	<option value="{{reason.id}}" ng-repeat="reason in reasons.reasons">{{reason.reason}}</option>
+	    </select>
+	</div>
+	<label>Canceller's name (optional):</label>
+	<div class="name">
+	    <input type="text" ng-model="cancellation.name" maxlength="100">
+	</div>
+	<label>Comments *:</label>
+	<div class="comments">
+	    <textarea ng-model="cancellation.comments" maxlength="1000">
+	    </textarea>
+	</div>
+</div>
+<div class="modal-footer">
+    <div>
+    	<a ng-click="$dismiss('footer close')" class="button secondary">Close</a>
+    	<a ng-click="cancelOrder()" ng-hide="isCancelled" dcom-processing="{{isProcessingCancellation}}" class="button primary">Cancel order</a>
+    	<a ng-click="$dismiss('footer close')" ng-show="isCancelled" href="/#!/oocl" class="button primary">View orders</a>
+    </div>
+</div>

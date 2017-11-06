@@ -1,0 +1,59 @@
+.page-login {
+	.error-messages {
+		padding-bottom: 5px;
+		color: #ff0000;
+	}
+	.content {
+		padding: $gutter-width;
+		
+		input[type="text"],
+		input[type="email"],
+		input[type="password"]{
+			@include box-sizing(border-box);
+			width: 400px;
+			height: 40px;
+		}
+	
+		.form-field {
+			margin-bottom: $gutter-width;
+			margin-left: auto;
+			margin-right: auto;
+			width: 400px;
+		}
+		.button.login {
+			display: block;
+		}
+		.forgot_password {
+			margin-top: 30px;
+			text-align: center;
+
+			a {
+				color: $primary-color-lighter;
+			}
+		}
+	}
+	.signup {
+		border-top: 1px solid $border-color;
+		margin-top: 50px;
+	}
+	.sign-in {
+		width: 400px;
+		margin-left:auto;
+		margin-right: auto;
+	}
+	.signup .cta .button {
+		@include box-sizing(border-box);
+
+		width: 400px;
+		height: $button-height;
+	}
+	.modal input[type=email] {
+		@include box-sizing(border-box);
+
+		height: 40px;
+		width: 400px;
+	}
+	.modal input[type=submit] {
+		margin-top: $gutter-width;
+	}
+}

@@ -1,0 +1,28 @@
+@import "compass/layout/stretching";
+@import "compass/utilities";
+@import "compass/utilities/general/clearfix";
+@import "compass/css3/";
+
+@import "normalize";
+@import "bootstrap";
+
+/*!
+ * delivery.com
+ */
+@import "base";
+
+// Basic styles
+@import "default";
+@import "buttons";
+@import "icons";
+
+@import "header";
+@import "ngswitcher";
+
+// pages
+@import "pages/login";
+@import "pages/onlineOrderConf";
+@import "pages/onlineOrderConfList";
+
+//print for ooc page
+@import "pages/print";

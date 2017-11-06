@@ -1,0 +1,188 @@
+<div class="banner-wrapper">
+    <div class="banner">
+    	<div class="text" ng-show="orderId">
+    		<div class="title">Order:{{orderId}}</div>
+    		<div class="content" ng-show="order.order_date">placed on {{order.order_date | date:'M/d'}} at {{order.order_date | date: 'h:mma'}}</div>
+    	</div>
+    </div>
+</div>
+<div class="loading" ng-show="loadingOrder"></div>
+<div class="main-wrapper" ng-hide="loadingOrder">
+	<div class="order-details">
+		<div style="clear:both"></div>
+		<div class="content-wrapper">
+			<div class="logistics">
+				<div class="order-info">
+			    	<div class="heading">Order: {{orderId}}</div>
+			    	<div class="info">
+			    		<div>For: <span class="order-type">{{order.type}}</span>
+			    		</div>
+			    		<div>When: <span class="order-time">{{ order.delivery_date | date: 'h:mma'}} {{ order.delivery_date  | date: M/d/y }}</span></div>
+			    		<div class="account-type">
+			    			<div class="type" ng-show="(order.payment.label)">{{order.payment.label | removeUnderscore }}</div>
+			    			<div ng-show="(order.payment.label=='credit_card' && order.confirmed==null)">
+			    			<div>Name: {{order.payment.customer_name}}</div>
+			    			<div>Paying by: {{order.payment.cc_number}}({{order.payment.cc_type}})</div>
+			    			<div>Exp: {{order.payment.exp_month}}/{{order.payment.exp_year}}</div>
+			    			<div>Zip code: {{order.payment.zip_code}}</div>
+			    			<div>Amount: {{order.payment.charge_amount | currency}}</div>
+			    			</div>
+			    			<div class="payment-note" ng-show="(order.payment.label=='house')">(do not collect payment)</div>
+			    		</div>
+			    		<div ng-show="(order.confirmed==false || order.confirmed==true)">
+							<span ng-show="order.confirmed==false">Cancelled at</span>
+							<span ng-show="order.confirmed==true">Confirmed at</span>
+							 {{ order.confirmed_date | date: 'h:mma'}} on {{ order.confirmed_date  | date: M/d/y }}
+						</div>
+			    	</div>
+			    </div>
+			    <div class="logo">
+			    	<img src="/images/blue-company-logo.png" width="240" height="77">
+			    </div>
+			</div>
+			<div style="clear:both"></div>
+			<div class="delivery-address">
+			    Order to: {{ merchant.summary.name }} {{ merchant.summary.phone }} | {{ merchant.location.street }}, {{ merchant.location.city }}, {{ merchant.location.state }}
+			</div>
+			<div style="clear:both"></div>
+			<div class="customer-info">
+			    <div class="data">
+			    	<div class="heading">Customer Information</div>
+			    	<div class="name" ng-bind-html="order.customer_name"></div>
+			    	<div class="address" ng-bind-html="order.street"></div>
+			    	<div class="city-and-state">{{order.city}}, {{order.state}} {{order.zip_code}}</div>
+			    	<div class="phone">{{order.phone | formatPhones }}</div>
+			    </div>
+			    <div id="map-canvas" class="map" ng-if="(order.longitude && order.latitude)"></div>
+			</div>
+			<div style="clear:both"></div>
+			<div class="special-instructions" ng-show="order.instructions">
+				<div class="heading">Special instructions</div>
+				<div ng-bind-html="order.instructions"></div>
+			</div>
+			<div style="clear:both"></div>
+			<div class="order-summary">
+			    <div class="heading">Order summary</div>
+			    <div class="items">
+			    	<div class="line-item" ng-repeat="item in order.cart">
+			    		<div class="qty">{{ item.quantity }}</div>
+			    		<div class="name" ng-bind-html="item.name"></div>
+			    		<div class="line-total">{{ item.price | currency }}</div>
+			    		<div style="clear:both"></div>
+						<div ng-show="item.options" class="options" ng-repeat="options in item.options">
+		    				<span class="name">
+		    					<span ng-bind-html="options.name"></span>:
+		    					<span ng-show="options.quantity" class="value">{{options.quantity}}</span>
+		    					<span ng-show="options.options" ng-repeat="suboptions in options">
+		    						<span ng-show="optionValue.name" class="value" ng-repeat="optionValue in suboptions">
+                        	            <span ng-bind-html="optionValue.name"></span>
+		    						</span>
+		    					</span>
+		    				</span>
+		    			</div>
+		    			<div style="clear:both"></div>
+		    			<div ng-show="item.instructions">
+		    				<span>Instructions:</span>
+		    				<span ng-bind-html="item.instructions"></span>
+		    			</div>
+		    		</div>
+			    </div>
+				<div style="clear:both"></div>
+			    <div class="charges">
+			    	<div class="sub-charges">
+			    		<div class="label">Subtotal</div>
+			    		<div class="value">{{order.subtotal | currency }}</div>
+			    	</div>
+					<div style="clear:both"></div>
+					<! -- points_earned, promo_amount_used, gift_card_amount_used, discount -->
+					<div class="sub-charges"  ng-show="order.points_earned">
+			    		<div class="label">Points earned</div>
+			    		<div class="value">{{order.tax | currency }}</div>
+			    	</div>
+			    	<div class="sub-charges"  ng-show="order.promo_amount_used">
+			    		<div class="label">Promo amount used</div>
+			    		<div class="value">{{order.promo_amount_used | currency }}</div>
+			    	</div>
+			    	<div class="sub-charges"  ng-show="order.gift_card_amount_used">
+			    		<div class="label">Gift Card Amount Used</div>
+			    		<div class="value">{{order.gift_card_amount_used | currency }}</div>
+			    	</div>
+			    	<div class="sub-charges"  ng-show="order.discount">
+			    		<div class="label">Discount</div>
+			    		<div class="value">{{order.discount | currency}}</div>
+			    	</div>
+			    	
+			    	<div class="sub-charges"  ng-show="(order.tax > 0)">
+			    		<div class="label">Tax</div>
+			    		<div class="value">{{order.tax | currency }}</div>
+			    	</div>
+					<div style="clear:both"></div>
+			    	<div class="sub-charges" ng-show="(order.delivery_fee > 0)">
+			    		<div class="label">Delivery fee</div>
+			    		<div class="value">{{order.delivery_fee | currency }}</div>
+			    	</div>
+					<div style="clear:both"></div>
+			    	<div class="sub-charges" ng-show="(order.tip > 0)">
+			    		<div class="label">Tip</div>
+			    		<div class="value">{{order.tip | currency }}</div>
+			    	</div>
+					<div style="clear:both"></div>
+			    	<div class="total">
+			    		<div class="label">Total</div>
+			    		<div class="value">{{order.total | currency }}</div>
+			    	</div>
+			    </div>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+	</div>
+	<div class="order-cta" ng-show="(order.confirmed==null && isConfirmed==false)">
+		<div class="confirm-cta">	
+			<div style="clear:both"></div>	
+			<div class="confirm-and-print">
+				<a class="button primary" ng-click="confirmOrder(orderId, true)" dcom-processing="{{isProcessingConfirmPrint}}">Confirm and print</a>
+			</div>
+			<div style="clear:both"></div>	
+			<div class="confirm">
+				<a class="button secondary" ng-click="confirmOrder(orderId, false)" dcom-processing="{{isProcessingConfirm}}">Confirm</a>
+			</div>
+			<div style="clear:both"></div>	
+			<div class="confirm">
+				<a href="/#!/oocl" class="button secondary">View orders</a>
+			</div>
+		</div>
+		<div style="clear:both"></div>	
+		<div class="cancel">
+			<div class="title">Need to cancel?</div>
+			<div class="content">Fill out this quick order cancelation form by first clicking the cancel button.
+			</div>
+			<div class="cta">
+				<a ng-click="cancelOrder(orderId)">Cancel order</a>
+			</div>
+		</div>
+		<div style="clear:both"></div>	
+		<div class="help">
+			<div class="title">Need help?</div>
+			<div class="content">Our customer service team is here to help! If you have any issues with your order, make sure to contact the merchant, whose phone number is always included in the confirmation email. But if that proves unsuccessful, then feel free to give us a call at 1-800-709-7191 or fill out the form on the left.
+			</div>
+			<div class="cta">
+				<a ng-click="showOlarkHelp()">Chat with customer service</a>
+			</div>
+		</div>
+	</div>
+	<div class="confirmed-order-details" ng-show="(order.confirmed==true || isConfirmed==true || order.confirmed==false)">
+		<div class="cta-buttons">
+			<a href="/#!/oocl" class="button primary">View orders</a>
+		</div>
+		<div class="cta-buttons">
+			<a href="javascript: window.print()" class="button secondary">Print</a>
+		</div>
+		<div class="help">
+			<div class="title">Need help?</div>
+			<div class="content">Our customer service team is here to help! If you have any issues with your order, make sure to contact the merchant, whose phone number is always included in the confirmation email. But if that proves unsuccessful, then feel free to give us a call at 1-800-709-7191 or fill out the form on the left.</div>
+			<div class="cta">
+			    <a ng-click="showOlarkHelp()">Chat with customer service</a>
+			</div>
+		</div>
+	</div>
+</div>
